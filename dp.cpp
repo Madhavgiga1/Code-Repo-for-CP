@@ -15,6 +15,7 @@ int mincostclimber(int n, vector<int> &dp, vector<int> &cost) { //we wanna know 
 	int f2 = mincostclimber(n - 2, dp, cost) + cost[n - 2];
 	return dp[n] = min(f1, f2);
 }
+
 class pathf {
 public:
 	int pathnumberways(int i, int j, vector<vector<int>> &dp) { //q me m*n matrix bolke dete h
@@ -48,7 +49,35 @@ public:
 		int noways = pathnumberwaysatab(n, dptab);
 		return noways;
 	}
+public:
+	int  uniquePathsWithObstacles(int n, vector<vector<int>> &dp, vector<vector<int>>& obstacleGrid) { //can only move right aur bottom 0,0 se
+		if (i == 0 && j == 0) return 1;
+		if (i < 0 || j < 0 || obstacleGrid[i][j] == 1 ) return 0; //outta boundary
+		if (dp[i][j] != -1)return dp[i][j];
+		int left = pathnumberways(i - 1, j, dp);
+		int top = pathnumberways(i, j - 1, dp);
+		return dp[i][j] = left + top;
+	}
+public:
+	int f(int i, int j, vector<vector<int>> &dp, vector<vector<int>>& grid) {
+		if (i < 0 || j < 0)return INT_MAX; //you ut return 0 over here
+		//notice the order over here agar tune if(i==0&& j==0 )bad me rakhi to 0,0 aane pe f(0,0) returns left=INT_MAX and top=INT_MAX
+		if (i == 0 && j == 0)return grid[0][0];
+		if (dp[i][j] != -1)return dp[i][j];
+		int left = f(i - 1, j, dp, grid);
+		int right = f(i, j - 1, dp, grid);
+		int maxi = max(left, right);
+		return dp[i][j] = grid[i][j] + maxi;
+
+	}
+	int minPathSum(vector<vector<int>>& grid) {
+		int r = grid.size(); int c = grid[0].size();
+		vector<vector<int>> dp(r, vector<int> (c, -1));
+		int ans = f(r - 1, c - 1, grid, dp);
+		return ans;
+	}
 };
+
 int main() {
 #ifndef ONLINE_JUDGE
 	freopen("input1.txt", "r", stdin);
@@ -66,4 +95,5 @@ int main() {
 	cout << ans2 << endl;
 	//for (int i = 1; i < 5; i++)cout << i << " ";
 	return 0;
+
 }
