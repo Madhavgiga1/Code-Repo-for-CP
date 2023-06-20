@@ -25,6 +25,8 @@ int lowerb(int l, int h, int target, vector<int> &a) {
 	while (l < h) {
 		mid = (l + h) / 2;
 		if (a[mid] < target)l = mid + 1;
+
+		
 		else {
 			h = mid;
 		}
@@ -37,23 +39,82 @@ int upperb(int l, int h, int target, vector<int> &a) {
 	int mid;
 	while (l < h) {
 		mid = (l + h) / 2;
-		if (a[mid] <= target)l = mid + 1;
+		if (a[mid] <= target){
+			l = mid + 1;
+		}
 		else {
 			h = mid;
 		}
 	}
 	if (a[l] > target)return l;
-	if (a[h] > target)return h;
+	//if (a[h] > target)return h;
 	return -1;
 }
+int laster(int l, int h, int target, vector<int> &a){
+    int mid, last = -1;
+    while (l <= h) {
+        mid = (l + h) / 2;
+        if (a[mid] <= target) {
+            if (a[mid] == target) {
+                last = mid;
+            }
+            l = mid + 1;
+        }
+        else {
+            h = mid - 1;
+        }
+    }
+    return last;
+}
+int findPeakElement(vector<int>& nums) {
+	int l=0,high=nums.size()-1;
+	int mid;
+	while(l<h){
+		mid=(l+h)/2;
+	}
+
+        
+}
+class singleinsorted
+{
+  public:
+    int findOnce(int arr[], int n)
+    {
+        int low = 0, high = n - 1;
+        while (low < high) 
+        {
+            // Find the middle point
+            int mid = (low + high) / 2;
+        
+            // If mid is even and element next to mid is
+            // same as mid, then output element lies on
+            // right side, else on left side
+            if (mid%2 == 0)
+            {
+                if (arr[mid] == arr[mid+1])
+                    low = mid + 2;
+                else
+                    high = mid;
+            }
+            else  // If mid is odd
+            {
+                if (arr[mid] == arr[mid-1])
+                    low = mid + 1;
+                else
+                    high = mid - 1;
+            }
+        }
+        return arr[low];
+    }
+
+};
 int main() {
-#ifndef ONLINE_JUDGE
-	freopen("input1.txt", "r", stdin);
-	freopen("output1.txt", "w", stdout);
-#endif
+
 	vector<int> a;
-	a = {0, 1, 2, 3, 5, 6};
+	a = {0, 1, 2,2, 3, 5, 6};
 	int ans = a[lowerb(0, 5, 4, a)];
-	int ans1 = a[upperb(0, 6, 5, a)];
+	int ans1 = a[upperb(0, 6, 4, a)];
+	int ans3=laster(0,6,2,a);
 	cout << ans1;
+	return 0;
 }
