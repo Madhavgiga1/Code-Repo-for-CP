@@ -1,5 +1,32 @@
 #include <bits/stdc++.h>
 using namespace std;
+    /*
+    class Solution {
+public:
+    int template(string s, int k) {
+        int n=s.size();
+        int ans=0;int left=0;
+        for(int right=0;right<=n-1;right++){
+            while(){
+                left++;
+            }
+            ans=max(right-left+1,ans);
+        }
+        return ans;
+        
+    }
+};
+// if you are incrementing the left pointer dont just use nt sizze=right-left+1 that would not update the code 
+//in while loop like this.
+            int size=right-left+1;
+            while (size - maxfreq > k) {
+                m[s[left]]--;
+                if (m[s[left]] == 0) m.erase(s[left]);
+                left++;
+            }
+// dont forget to use left<=right if required             
+*/
+    
     int longestsubarraysum(vector<int> &a,int k){
         int left=0,right=0;
         int maxlength=0;int sum=0;
@@ -104,6 +131,45 @@ using namespace std;
             }
         }
         return (ans != INT_MAX) ? ans : 0;
+    }
+    class Solution {
+        public:
+        int longestSemiRepetitiveSubstring(string s) {
+            int n=s.size();
+            if(n==1||n==0)return n;
+            int left=0;
+            int concount=0;
+            unordered_set<int> st;
+            int ans=0;
+            for(int right=1;right<=n-1;right++){
+                if(s[right]==s[right-1]){
+                    concount++;
+                    st.insert(right-1);
+                }
+                while(concount>1){
+                    if(st.find(left)!=st.end()){
+                        concount--;    
+                    }
+                    left++;
+                }
+                ans=max(ans,right-left+1);
+            }
+            return ans;
+        }
+    };
+    int MaxConsecutiveOnesIII(vector<int>& nums, int k) {
+        int n=nums.size();
+        int left=0;
+        int count=0;int ans=0;
+        for(int right=0;right<=n-1;right++){
+            if(nums[right]==0)count++;
+            while(count>k){
+                if(nums[left]==0)count--;
+                left++;
+            }
+            ans=max(ans,right-left+1);
+        }
+        return ans;
     }
 
 
