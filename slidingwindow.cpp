@@ -171,6 +171,47 @@ public:
         }
         return ans;
     }
+    int binarySubarraysWithSum(vector<int>& nums, int goal) {
+        int sum=0;int left=0;
+        int ans=0;
+        for(int right=0;right<=nums.size()-1;right++){
+            sum=sum+nums[right];
+            while(sum>goal && left<=right){
+                sum=sum-nums[left];
+                left++;
+                
+            }
+            
+            int nsum=sum;
+            int nleft=left;
+            while(nsum==goal &&  nleft<=right){
+                ans++;
+                nsum=nsum-nums[nleft];
+                nleft++;
+            }
+        }
+        return ans;
+    }
+    // number of subarray having only k odd numbers.
+    int numberOfSubarrays(vector<int>& nums, int k) {
+        int n=nums.size();
+        int ans=0;int count=0;
+        int left=0;
+        for(int right=0;right<=n-1;right++){
+            if(nums[right]%2==1)count++;
+            while(count>k && left<=right){
+                if((nums[left]%2)==1)count--;
+                left++;
+            }
+            int ncount=count,nleft=left;
+            while(ncount==k && nleft<=right){
+                ans++;
+                if(nums[nleft]%2==1)ncount--;
+                nleft++;
+            }
+        }
+        return ans;
+    }
 
 
 int main(){
